@@ -1,12 +1,17 @@
 package bookstore.entity;
 
 import jakarta.persistence.*;
+import lombok.*;
 
-import java.awt.print.Book;
 import java.util.List;
 
 @Entity
 @Table(name = "authors")
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@ToString(exclude = {"books"})
 public class Author {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -20,14 +25,4 @@ public class Author {
 
     @OneToMany(mappedBy = "author")
     private List<Book> books;
-
-    // Getters and Setters
-    public Long getAuthorId() { return authorId; }
-    public void setAuthorId(Long authorId) { this.authorId = authorId; }
-    public String getAuthorName() { return authorName; }
-    public void setAuthorName(String authorName) { this.authorName = authorName; }
-    public String getBio() { return bio; }
-    public void setBio(String bio) { this.bio = bio; }
-    public List<Book> getBooks() { return books; }
-    public void setBooks(List<Book> books) { this.books = books; }
 }

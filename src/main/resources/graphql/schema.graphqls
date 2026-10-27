@@ -1,0 +1,109 @@
+type Query {
+    getAllAuthors: [Author]
+    getAuthorById(id: ID!): Author
+
+    getAllBooks: [Book]
+    getBookById(id: ID!): Book
+
+    getAllCustomers: [Customer]
+    getCustomerById(id: ID!): Customer
+
+    getAllOrders: [Order]
+    getOrderById(id: ID!): Order
+
+    getItemsByOrderId(orderId: ID!): [OrderItem]
+}
+
+type Mutation {
+    createAuthor(input: AuthorInput!): Author
+    updateAuthor(id: ID!, input: AuthorInput!): Author
+    deleteAuthor(id: ID!): Boolean
+
+    createBook(input: BookInput!): Book
+    updateBook(id: ID!, input: BookInput!): Book
+    deleteBook(id: ID!): Boolean
+
+    createCustomer(input: CustomerInput!): Customer
+    updateCustomer(id: ID!, input: CustomerInput!): Customer
+    deleteCustomer(id: ID!): Boolean
+
+    createOrder(input: OrderInput!): Order
+    deleteOrder(id: ID!): Boolean
+
+    createOrderItem(orderId: ID!, input: OrderItemInput!): OrderItem
+    updateOrderItem(orderItemId: ID!, input: OrderItemUpdateInput!): OrderItem
+    deleteOrderItem(itemId: ID!): Boolean
+}
+
+type Book {
+    bookId: ID!
+    title: String!
+    price: Float!
+    stockQuantity: Int
+    publishedYear: Int
+    author: Author
+}
+
+type Author {
+    authorId: ID!
+    authorName: String!
+    bio: String
+    books: [Book]
+}
+
+type Customer {
+    customerId: ID!
+    fullName: String!
+    email: String!
+    phone: String
+    createdAt: String
+    orders: [Order]
+}
+
+type Order {
+    orderId: ID!
+    customer: Customer!
+    orderDate: String
+    totalAmount: Float
+    orderItems: [OrderItem]
+}
+
+type OrderItem {
+    itemId: ID!
+    order: Order!
+    book: Book!
+    quantity: Int!
+    price: Float!
+}
+
+input BookInput {
+    title: String!
+    price: Float!
+    stockQuantity: Int!
+    publishedYear: Int
+    authorId: ID!
+}
+
+input AuthorInput {
+    authorName: String!
+    bio: String
+}
+
+input CustomerInput {
+    fullName: String!
+    email: String!
+    phone: String
+}
+
+input OrderInput {
+    customerId: ID!
+}
+
+input OrderItemInput {
+    bookId: ID!
+    quantity: Int!
+}
+
+input OrderItemUpdateInput {
+    newQuantity: Int!
+}
